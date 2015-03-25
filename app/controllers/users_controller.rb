@@ -3,10 +3,25 @@ class UsersController < ApplicationController
 
   # GET /users
   # GET /users.json
-  def index
-    @users = User.all
+  
+  def search
   end
 
+  def index
+    respond_to do |format|
+        if params[:search]
+          @users =  User.search(params[:search])
+          format.html 
+          format.js
+        else
+          @users = User.all
+          format.html
+          format.js
+        end
+    end 
+  end
+  
+  
   # GET /users/1
   # GET /users/1.json
   def show
